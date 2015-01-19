@@ -1,4 +1,4 @@
-import requests
+from requests.api import get
 import json
 import time
 
@@ -7,7 +7,7 @@ similarPairs = dict()
 
 for i in range(1,7):
     address = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=9gfenez9rnk7695er96p3hxn&q=life&page_limit=50&page=' + str(i)
-    resp = requests.get(address)
+    resp = get(address)
     respJson = json.loads(resp.text)
     for j in range(0,50):
         movieList.append(respJson['movies'][j])
@@ -20,7 +20,7 @@ with open('movie_ID_name.txt', 'w') as outputFile:
 with open('movie_ID_sim_movie_ID.txt', 'w') as outputFile:
     for i in range(0,300):
         address = 'http://api.rottentomatoes.com/api/public/v1.0/movies/' + str(movieList[i]['id']) + '/similar.json?apikey=9gfenez9rnk7695er96p3hxn'
-        resp = requests.get(address)
+        resp = get(address)
         respJson = json.loads(resp.text)
         time.sleep(0.2)
         for movie in respJson['movies']:
